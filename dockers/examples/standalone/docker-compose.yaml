@@ -18,7 +18,6 @@ services:
       - NEXT_ENV_IMAGES_ALL_REMOTE=true
     networks:
       - teable-standalone
-      - bridge
     depends_on:
       teable-db-migrate:
         condition: service_completed_successfully
