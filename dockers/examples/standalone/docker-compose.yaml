@@ -7,17 +7,18 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - teable-data:/app/.assets:rw
+      # - teable-data:/app/.assets:rw
       # you may use a bind-mounted host directory instead,
       # so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/teable/data:/app/.assets:rw
+      - /docker/teable/data:/app/.assets:rw
     env_file:
-      - .env
+      - stack.env
     environment:
       - TZ=${TIMEZONE}
       - NEXT_ENV_IMAGES_ALL_REMOTE=true
     networks:
       - teable-standalone
+      - bridge
     depends_on:
       teable-db-migrate:
         condition: service_completed_successfully
@@ -28,10 +29,10 @@ services:
     ports:
       - '42345:5432'
     volumes:
-      - teable-db:/var/lib/postgresql/data:rw
+      # - teable-db:/var/lib/postgresql/data:rw
       # you may use a bind-mounted host directory instead,
       # so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+      - /docker/teable/db/data:/var/lib/postgresql/data:rw
     environment:
       - TZ=${TIMEZONE}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -61,6 +62,6 @@ networks:
     name: teable-standalone-network
     driver: bridge
 
-volumes:
-  teable-data: {}
-  teable-db: {}
+# volumes:
+#   teable-data: {}
+#   teable-db: {}
