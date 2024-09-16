@@ -5,7 +5,7 @@ services:
     image: ghcr.io/teableio/teable:latest
     restart: always
     ports:
-      - '3000:3000'
+      - '127.0.0.1:3000:3000'
     volumes:
       # - teable-data:/app/.assets:rw
       # you may use a bind-mounted host directory instead,
@@ -58,7 +58,6 @@ services:
         condition: service_healthy
 
 networks:
-  bridge:
   teable-standalone:
     name: teable-standalone-network
     driver: bridge
